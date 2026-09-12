@@ -46,8 +46,8 @@ function isGuard(i, ranges){
 
 // ---------- App state ----------
 const state = {
-  eanCode: '7891234567895',
-  name: 'SUPORTE TÉCNICO',
+  eanCode: '',
+  name: '',
   namePos: 'below',
   nameSize: 16,
   nameBold: false,
@@ -278,9 +278,24 @@ function setLogo(dataUrl){
 // ---------- Preview ----------
 const previewCanvas = document.getElementById('previewCanvas');
 const canvasWrap = document.getElementById('canvasWrap');
+const previewPlaceholder = document.getElementById('previewPlaceholder');
 const dimInfo = document.getElementById('dimInfo');
 
+function hasValidCode(){
+  return state.eanCode.replace(/\D/g, '').length > 0;
+}
+
 function renderPreview(){
+  if (!hasValidCode()){
+    canvasWrap.classList.add('hidden');
+    previewPlaceholder.classList.remove('hidden');
+    dimInfo.textContent = '';
+    updateGridInfo();
+    return;
+  }
+  previewPlaceholder.classList.add('hidden');
+  canvasWrap.classList.remove('hidden');
+
   const geo = buildGeometry(state);
   const mult = 2;
   const { W, H } = renderToCanvas(previewCanvas, geo, mult);
@@ -302,6 +317,7 @@ function renderPreview(){
 const EXPORT_MULT = 6;
 
 function downloadPNG(){
+  if (!hasValidCode()){ alert('Digite um código EAN-13 antes de baixar.'); return; }
   const geo = buildGeometry(state);
   const canvas = document.createElement('canvas');
   renderToCanvas(canvas, geo, EXPORT_MULT);
@@ -318,6 +334,7 @@ function downloadPNG(){
 }
 
 function downloadPDF(){
+  if (!hasValidCode()){ alert('Digite um código EAN-13 antes de baixar.'); return; }
   const geo = buildGeometry(state, 'white'); // print always on white
   const canvas = document.createElement('canvas');
   renderToCanvas(canvas, geo, EXPORT_MULT);
@@ -361,6 +378,10 @@ function gridPlan(){
 function updateGridInfo(){
   const infoEl = document.getElementById('gridInfo');
   if (!infoEl) return;
+  if (!hasValidCode()){
+    infoEl.textContent = 'Digite um código EAN-13 para calcular a grade.';
+    return;
+  }
   const p = gridPlan();
   if (!p.fits){
     infoEl.textContent = 'A etiqueta atual não cabe na página A4 com essa margem — reduza a escala ou a margem.';
@@ -370,6 +391,7 @@ function updateGridInfo(){
 }
 
 function downloadGridPDF(){
+  if (!hasValidCode()){ alert('Digite um código EAN-13 antes de gerar a grade.'); return; }
   const p = gridPlan();
   if (!p.fits){
     alert('A etiqueta é maior que a área útil da página A4. Reduza a escala do código ou as margens antes de gerar a grade.');

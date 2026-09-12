@@ -33,9 +33,9 @@
       <label class="field-label block">Código do produto (EAN-13)</label>
       <input id="eanCode" type="text" inputmode="numeric" maxlength="13"
         class="ean-input font-mono-num w-full text-xl rounded-lg px-3 py-2.5"
-        value="7891234567895">
+        value="">
       <div class="flex items-center justify-between text-[0.7rem] text-[var(--muted)]">
-        <span id="eanCounter">13 / 13 dígitos</span>
+        <span id="eanCounter">0 / 13 dígitos</span>
         <span>Dígito verificador não é validado</span>
       </div>
     </div>
@@ -47,7 +47,7 @@
       <div class="space-y-2">
         <label class="field-label block">Nome / descrição</label>
         <input id="nameText" type="text" maxlength="40" placeholder="Ex.: SUPORTE, OPERADOR 01"
-          class="std-input w-full text-sm rounded-lg px-3 py-2.5" value="SUPORTE TÉCNICO">
+          class="std-input w-full text-sm rounded-lg px-3 py-2.5" value="">
       </div>
 
       <div class="grid grid-cols-2 gap-3">
@@ -229,6 +229,18 @@
     <div class="workbench flex-1 min-h-[420px] bg-[#1A1D22] border border-[var(--border)] rounded-xl flex items-center justify-center p-8">
       <div id="canvasWrap" class="rounded-md shadow-[0_20px_50px_rgba(0,0,0,.5)] overflow-hidden">
         <canvas id="previewCanvas"></canvas>
+      </div>
+      <div id="previewPlaceholder" class="hidden text-center max-w-xs">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" class="mx-auto mb-3 opacity-40">
+          <rect x="6" y="8" width="2.5" height="24" fill="currentColor"/>
+          <rect x="11" y="8" width="1.2" height="24" fill="currentColor"/>
+          <rect x="14.5" y="8" width="2.5" height="24" fill="currentColor"/>
+          <rect x="19" y="8" width="1.2" height="24" fill="currentColor"/>
+          <rect x="22" y="8" width="2.5" height="24" fill="currentColor"/>
+          <rect x="27" y="8" width="1.2" height="24" fill="currentColor"/>
+          <rect x="30" y="8" width="2.5" height="24" fill="currentColor"/>
+        </svg>
+        <p class="text-sm text-[var(--muted)]">Digite um código EAN-13 ao lado para ver a etiqueta aqui.</p>
       </div>
     </div>
     <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-[var(--muted)] px-1">
